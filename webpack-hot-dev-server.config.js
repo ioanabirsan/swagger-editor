@@ -41,7 +41,7 @@ module.exports = require("./make-webpack-config.js")({
 
 	devtool: "eval-source-map",
   devServer: {
-    port: 3200,
+    port: 3201,
     contentBase: path.join(__dirname, "dev-helpers"),
     publicPath: "/",
     noInfo: true,

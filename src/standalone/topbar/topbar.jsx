@@ -154,6 +154,31 @@ export default class Topbar extends React.Component {
     this.downloadFile(prettyJsonContent, `${fileName}.json`)
   }
 
+  saveAsTurtle = () => {
+    let editorContent = this.props.specSelectors.specStr()
+    let fileName = this.getFileName()
+
+    if(this.hasParserErrors()) {
+      // we can't recover from a parser error in save as JSON
+      // because we are always parsing so we can beautify
+      return alert("Save as Turtle is not currently possible because Swagger-Editor wasn't able to parse your API definiton.")
+    }
+
+    // JSON or YAML String -> JS object
+    let jsContent = YAML.safeLoad(editorContent)
+    let rdfTriplesInTurtleSyntax = ""
+
+    for (let definitionKey in jsContent["definitions"]) {
+      let definition = jsContent["definitions"][definitionKey]
+      if ("x-rdf-type" in definition) {
+        let rdfTriple = definitionKey + " rdf:type " +  definition["x-rdf-type"] + "\n"
+        rdfTriplesInTurtleSyntax += rdfTriple
+      }
+    }
+
+    this.downloadFile(rdfTriplesInTurtleSyntax, `${fileName}.ttl`)
+  }
+
   saveAsText = () => {
     // Download raw text content
     console.warn("DEPRECATED: saveAsText will be removed in the next minor version.")
@@ -345,6 +370,7 @@ export default class Topbar extends React.Component {
       saveAsElements.push(<li><button type="button" onClick={this.saveAsYaml}>Save as YAML</button></li>)
       saveAsElements.push(<li><button type="button" onClick={this.saveAsJson}>Convert and save as JSON</button></li>)
     }
+    saveAsElements.push(<li><button type="button" onClick={this.saveAsTurtle}>Convert and save as Turtle</button></li>)
 
     return (
       <div>
