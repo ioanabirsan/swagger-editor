@@ -6,7 +6,7 @@ export default class TTL {
   static convertToTurtle (jsonOrYaml) {
     // JSON or YAML String -> JS object
     let jsContent = YAML.safeLoad(jsonOrYaml)
-    let ontologyNamespace = jsContent["title"] || "swagger-schema"
+    let ontologyNamespace = jsContent["info"]["title"] || "swagger-schema"
     return `${TTL.getOntologyHeader(ontologyNamespace)} \n\n${TTL.jsonToTurtle(jsContent)}`
   }
 
