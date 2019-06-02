@@ -7,6 +7,7 @@ import DropdownMenu from "./DropdownMenu"
 import reactFileDownload from "react-file-download"
 import YAML from "@kyleshockey/js-yaml"
 import beautifyJson from "json-beautify"
+import TTL from "src/plugins/editor/editor-helpers/TTL"
 
 import "react-dd-menu/dist/react-dd-menu.css"
 import Logo from "./logo_small.svg"
@@ -164,17 +165,7 @@ export default class Topbar extends React.Component {
       return alert("Save as Turtle is not currently possible because Swagger-Editor wasn't able to parse your API definiton.")
     }
 
-    // JSON or YAML String -> JS object
-    let jsContent = YAML.safeLoad(editorContent)
-    let rdfTriplesInTurtleSyntax = ""
-
-    for (let definitionKey in jsContent["definitions"]) {
-      let definition = jsContent["definitions"][definitionKey]
-      if ("x-rdf-type" in definition) {
-        let rdfTriple = definitionKey + " rdf:type " +  definition["x-rdf-type"] + "\n"
-        rdfTriplesInTurtleSyntax += rdfTriple
-      }
-    }
+    let rdfTriplesInTurtleSyntax = TTL.convertToTurtle(editorContent, "test")
 
     this.downloadFile(rdfTriplesInTurtleSyntax, `${fileName}.ttl`)
   }
