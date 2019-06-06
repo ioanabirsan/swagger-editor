@@ -1,0 +1,155 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: Sample Car Dealership App
+  description: This is a sample server for a car dealership.
+  termsOfService: http://example.com/terms/
+paths:
+  /orders:
+    post:
+      summary: Creates an order and returns the order ID
+      operationId: createOrder
+      requestBody:
+        required: true
+        description: A JSON object that contains the order number and item.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created order.
+          links:
+            GetOrderById:
+              operationId: getOrder
+              parameters:
+                orderId: '$response.body#/id'
+              description: |
+                The `id` value returned in the response can be used as the `orderId` parameter in `GET /orders/{orderId}`.
+  '/orders/{orderId}':
+    get:
+      summary: Gets an order by ID
+      operationId: getOrderById
+      parameters:
+      - in: path
+        name: orderId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: An Order object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /cars:
+    post:
+      summary: Creates a car and returns the car ID
+      operationId: createCar
+      requestBody:
+        required: true
+        description: A JSON object that contains the car.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created car.
+          links:
+            GetCarById:
+              operationId: getCar
+              parameters:
+                carId: '$response.body#/id'
+              description: |
+                The `id` value returned in the response can be used as the `carId` parameter in `GET /cars/{carId}`.
+  '/cars/{carId}':
+    get:
+      summary: Gets a car by ID
+      operationId: getCar
+      parameters:
+      - in: path
+        name: carId
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: A Car object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+components:
+  schemas:
+    Order:
+      type: object
+      x-rdf-type: 'http://schema.org/Order'
+      properties:
+        id:
+          type: integer
+          format: int64
+        number:
+          type: integer
+          x-rdf-type: 'http://schema.org/orderNumber'
+        carId:
+          type: integer
+          format: int64
+        date:
+          type: string
+          x-rdf-type: 'http://schema.org/orderDate'
+        seller:
+          type: string
+          x-rdf-type: 'http://schema.org/seller'
+    Car:
+      type: object
+      x-rdf-type: 'http://schema.org/Car'
+      properties:
+        id:
+          type: integer
+          format: int64
+        bodyType:
+          x-rdf-type: 'https://schema.org/bodyType'
+          type: string
+        accelerationTime:
+          x-rdf-type: 'https://schema.org/accelerationTime'
+          type: number
+        emissionsCO2:
+          x-rdf-type: 'https://schema.org/emissionsCO2'
+          type: number
+        speed:
+          x-rdf-type: 'https://schema.org/speed'
+          type: number
+        model:
+          x-rdf-type: 'https://schema.org/model'
+          type: string
+        productionDate:
+          x-rdf-type: 'https://schema.org/productionDate'
+          type: string
+        fuelCapacity:
+          x-rdf-type: 'https://schema.org/fuelCapacity'
+          type: number
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'
