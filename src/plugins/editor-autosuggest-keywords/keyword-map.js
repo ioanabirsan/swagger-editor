@@ -1,3 +1,4 @@
+import schemaOrg from "./schema-org"
 
 var Bool = ["true", "false"]
 var Anything = String
@@ -17,13 +18,17 @@ var externalDocs = {
   url: String
 }
 
-
 var xml = {
   name: String,
   namespace: String,
   prefix: String,
   attribute: Bool,
   wrapped: Bool
+}
+
+function getSchemaOrgClasses () {
+  let concepts = schemaOrg["@graph"]
+  return concepts.filter(concept => concept["@type"] === "rdfs:Class").map(concept => concept["@id"])
 }
 
 var schema = {
@@ -47,6 +52,9 @@ var schema = {
   maxProperties: Number,
   minProperties: Number,
   required: [String],
+  "x-rdf-type": getSchemaOrgClasses(),
+  "x-same-as": String,
+  "x-test": String,
   type: ["string", "number", "integer", "boolean", "array", "object"],
   get items () { return this },
   get allOf () { return [this] },
@@ -115,7 +123,7 @@ var parameter = {
   name: String,
   description: String,
   required: ["true", "false"],
-  type:  [
+  type: [
     "string",
     "number",
     "boolean",
