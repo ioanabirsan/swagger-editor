@@ -31,6 +31,53 @@ function getSchemaOrgClasses () {
   return concepts.filter(concept => concept["@type"] === "rdfs:Class").map(concept => concept["@id"])
 }
 
+function getSchemaOrgProperties () {
+  let concepts = schemaOrg["@graph"]
+  return concepts.filter(concept => concept["@type"] === "rdf:Property").map(concept => concept["@id"])
+  // return ["http://schema.org/Property"]
+}
+
+var schemaOrgClasses = getSchemaOrgClasses()
+var schemaOrgProperties = getSchemaOrgProperties()
+
+var properties = {
+  $ref: String,
+  format: String,
+  title: String,
+  description: String,
+  default: String,
+  maximum: Number,
+  minimum: Number,
+  exclusiveMaximum: Bool,
+  exclusiveMinimum: Bool,
+  maxLength: Number,
+  minLength: Number,
+  pattern: String,
+  maxItems: Number,
+  minItems: Number,
+  uniqueItems: Bool,
+  enum: [String],
+  multipleOf: Number,
+  maxProperties: Number,
+  minProperties: Number,
+  required: [String],
+  "x-rdf-type": schemaOrgProperties,
+  type: ["string", "number", "integer", "boolean", "array", "object"],
+  get items () { return this },
+  get allOf () { return [this] },
+  get properties () {
+    return {
+      ".": this
+    }
+  },
+  get additionalProperties () { return this },
+  discriminator: String,
+  readOnly: Bool,
+  xml: xml,
+  externalDocs: externalDocs,
+  example: String
+}
+
 var schema = {
   $ref: String,
   format: String,
@@ -52,15 +99,14 @@ var schema = {
   maxProperties: Number,
   minProperties: Number,
   required: [String],
-  "x-rdf-type": getSchemaOrgClasses(),
-  "x-same-as": String,
-  "x-test": String,
+  "x-rdf-type": schemaOrgClasses,
+  "x-same-as": schemaOrgClasses,
   type: ["string", "number", "integer", "boolean", "array", "object"],
   get items () { return this },
   get allOf () { return [this] },
   get properties () {
     return {
-      ".": this
+      ".": properties
     }
   },
   get additionalProperties () { return this },

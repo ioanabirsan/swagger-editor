@@ -35,13 +35,26 @@ export default class TTL {
   static jsonToTurtle (swaggerSchema) {
     let rdfTriplesInTurtleSyntax = ""
 
-    for (let definitionKey in swaggerSchema["definitions"]) {
-      let definition = swaggerSchema["definitions"][definitionKey]
+    let definitions = swaggerSchema["definitions"]
+    for (let definitionKey in definitions) {
+      let definition = definitions[definitionKey]
       for (let rdfKey in rdfKeywords) {
         if (rdfKey in definition) {
           let rdfKeyword = rdfKeywords[rdfKey]
           let rdfTriple = `${definitionKey} ${rdfKeyword} ${definition[rdfKey]} . \n`
           rdfTriplesInTurtleSyntax += rdfTriple
+        }
+      }
+
+      let properties = definition["properties"]
+      for (let propertyKey in properties) {
+        let property = properties[propertyKey]
+        for (let rdfKey in rdfKeywords) {
+          if (rdfKey in property) {
+            let rdfKeyword = rdfKeywords[rdfKey]
+            let rdfTriple = `${propertyKey} ${rdfKeyword} ${property[rdfKey]} . \n`
+            rdfTriplesInTurtleSyntax += rdfTriple
+          }
         }
       }
     }
