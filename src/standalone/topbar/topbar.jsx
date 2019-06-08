@@ -165,8 +165,8 @@ export default class Topbar extends React.Component {
       return alert("Save as Turtle is not currently possible because Swagger-Editor wasn't able to parse your API definiton.")
     }
 
-    let rdfTriplesInTurtleSyntax = TTL.convertToTurtle(editorContent)
-
+    let isOas3 = this.props.specSelectors.isOAS3()
+    let rdfTriplesInTurtleSyntax = TTL.convertToTurtle(editorContent, isOas3)
     this.downloadFile(rdfTriplesInTurtleSyntax, `${fileName}.ttl`)
   }
 

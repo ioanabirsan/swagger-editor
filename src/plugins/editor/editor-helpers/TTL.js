@@ -1,16 +1,14 @@
 import YAML from "@kyleshockey/js-yaml"
 
 let rdfKeywords = {"x-rdf-type": "rdf:type", "x-same-as": "owl:sameAs"}
-let schemaUrl = "http://schema.org/"
-let schemaPrefix = "schema:"
 
 export default class TTL {
-  static convertToTurtle (jsonOrYaml) {
+  static convertToTurtle (jsonOrYaml, isOAS3) {
     // JSON or YAML String -> JS object
     let jsContent = YAML.safeLoad(jsonOrYaml)
     let ontologyNamespace = jsContent["info"]["title"] || "swagger-schema"
     ontologyNamespace = ontologyNamespace.replace(" ", "_")
-    return `${TTL.getOntologyHeader(ontologyNamespace)} \n\n${TTL.jsonToTurtle(jsContent)}`
+    return `${TTL.getOntologyHeader(ontologyNamespace)} \n\n${TTL.jsonToTurtle(jsContent, isOAS3)}`
   }
 
   static getOntologyHeader (ontologyNamespace) {
@@ -36,10 +34,16 @@ export default class TTL {
     return header
   }
 
-  static jsonToTurtle (swaggerSchema) {
+  static jsonToTurtle (swaggerSchema, isOAS3) {
     let rdfTriplesInTurtleSyntax = ""
+    let definitions
 
-    let definitions = swaggerSchema["definitions"]
+    if (isOAS3) {
+      definitions = swaggerSchema["components"]["schemas"]
+    } else {
+      definitions = swaggerSchema["definitions"]
+    }
+
     for (let definitionKey in definitions) {
       let definition = definitions[definitionKey]
       for (let rdfKey in rdfKeywords) {
