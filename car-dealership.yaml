@@ -1,0 +1,555 @@
+openapi: 3.0.0
+info:
+  version: 0.0.0
+  title: Car Dealership
+  description: This is a sample server for a car dealership.
+  termsOfService: http://example.com/terms/
+tags:
+  - name: order
+    description: Operations about orders
+  - name: car
+    description: Operations about cars
+  - name: dealer
+    description: Operations about dealers
+  - name: customer
+    description: Operations about customers
+paths:
+  /orders:
+    post:
+      tags:
+        - order
+      summary: Creates an order and returns the order ID
+      operationId: createOrder
+      requestBody:
+        required: true
+        description: A JSON object that contains the order number and item.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created order.
+          links:
+            GetOrderById:
+              operationId: getOrder
+              parameters:
+                orderId: '$response.body#/id'
+              description: |
+                The `id` value returned in the response can be used as the `orderId` parameter in `GET /orders/{orderId}`.
+    put:
+      tags:
+        - order
+      summary: Update an existing order
+      operationId: updateOrder
+      requestBody:
+        required: true
+        description: A JSON object that contains the order number and item.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Order'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Order not found
+        '405':
+          description: Validation exception
+      security:
+        - dealership_auth:
+            - 'write:orders'
+            - 'read:orders'
+    delete:
+      tags:
+        - order
+      summary: Deletes an order
+      operationId: deleteOrder
+      parameters:
+        - name: orderId
+          in: path
+          required: true
+          description: Order id to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Order not found
+      security:
+        - dealership_auth:
+            - 'write:orders'
+            - 'read:orders'
+  '/orders/{orderId}':
+    get:
+      tags:
+        - order
+      summary: Gets an order by ID
+      operationId: getOrderById
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: An Order object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /cars:
+    post:
+      tags:
+        - car
+      summary: Creates a car and returns the car ID
+      operationId: createCar
+      requestBody:
+        required: true
+        description: A JSON object that contains the car.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created car.
+          links:
+            GetCarById:
+              operationId: getCar
+              parameters:
+                carId: '$response.body#/id'
+              description: |
+                The `id` value returned in the response can be used as the `carId` parameter in `GET /cars/{carId}`.
+    put:
+      tags:
+        - car
+      summary: Update an existing car
+      operationId: updateCar
+      requestBody:
+        required: true
+        description: A JSON object that contains the car.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Car not found
+        '405':
+          description: Validation exception
+      security:
+        - dealership_auth:
+            - 'write:cars'
+            - 'read:cars'
+    delete:
+      tags:
+        - car
+      summary: Deletes a car
+      operationId: deleteCar
+      parameters:
+        - name: carId
+          in: path
+          required: true
+          description: Car id to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Car not found
+      security:
+        - dealership_auth:
+            - 'write:cars'
+            - 'read:cars'
+  '/cars/{carId}':
+    get:
+      tags:
+        - car
+      summary: Gets a car by ID
+      operationId: getCar
+      parameters:
+        - in: path
+          name: carId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A Car object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+  /dealers:
+    post:
+      tags:
+        - dealer
+      summary: Creates a dealer and returns the dealer ID
+      operationId: createDealer
+      requestBody:
+        required: true
+        description: A JSON object that contains the dealer.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dealer'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created dealer.
+          links:
+            GetDealerById:
+              operationId: getDealer
+              parameters:
+                carId: '$response.body#/id'
+              description: |
+                The `id` value returned in the response can be used as the `dealerId` parameter in `GET /dealers/{dealerId}`.
+    put:
+      tags:
+        - dealer
+      summary: Update an existing dealer
+      operationId: updateDealer
+      requestBody:
+        required: true
+        description: A JSON object that contains the dealer.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Dealer'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Dealer not found
+        '405':
+          description: Validation exception
+      security:
+        - dealership_auth:
+            - 'write:dealers'
+            - 'read:dealers'
+    delete:
+      tags:
+        - dealer
+      summary: Deletes a dealer
+      operationId: deleteDealer
+      parameters:
+        - name: dealerId
+          in: path
+          required: true
+          description: Dealer id to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Dealer not found
+      security:
+        - dealership_auth:
+            - 'write:dealers'
+            - 'read:dealers'
+  '/dealers/{dealerId}':
+    get:
+      tags:
+        - dealer
+      summary: Gets a dealer by ID
+      operationId: getDealer
+      parameters:
+        - in: path
+          name: dealerId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A Dealer object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Dealer'
+  /customers:
+    post:
+      tags:
+        - customer
+      summary: Creates a customer and returns the customer ID
+      operationId: createDCustomer
+      requestBody:
+        required: true
+        description: A JSON object that contains the customer.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '201':
+          description: Created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    format: int64
+                    description: ID of the created customer.
+          links:
+            GetCustomerById:
+              operationId: getCustomer
+              parameters:
+                customerId: '$response.body#/id'
+              description: |
+                The `id` value returned in the response can be used as the `customerId` parameter in `GET /customers/{customerId}`.
+    put:
+      tags:
+        - customer
+      summary: Update an existing customer
+      operationId: updateCustomer
+      requestBody:
+        required: true
+        description: A JSON object that contains the customer.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Customer'
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Customer not found
+        '405':
+          description: Validation exception
+      security:
+        - dealership_auth:
+            - 'write:customers'
+            - 'read:customers'
+    delete:
+      tags:
+        - customer
+      summary: Deletes a customer
+      operationId: deleteCustomer
+      parameters:
+        - name: customerId
+          in: path
+          required: true
+          description: Customer id to delete
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Customer not found
+      security:
+        - dealership_auth:
+            - 'write:customers'
+            - 'read:customers'
+  '/customers/{customerId}':
+    get:
+      tags:
+        - customer
+      summary: Gets a customer by ID
+      operationId: getCustomer
+      parameters:
+        - in: path
+          name: customerId
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: A Customer object
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+components:
+  schemas:
+    Order:
+      type: object
+      x-rdf-type: http://schema.org/Order
+      properties:
+        id:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        carId:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        customerId:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        dealerId:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        number:
+          type: string
+          x-rdf-type: http://schema.org/orderNumber
+          format: int64
+        date:
+          type: string
+          x-rdf-type: http://schema.org/orderDate
+        status:
+          type: string
+          x-rdf-type: http://schema.org/orderStatus
+          example: waiting/processed
+        confirmationNumber:
+          type: string
+          x-rdf-type: http://schema.org/confirmationNumber
+        billingAddress:
+          type: string
+          x-rdf-type: http://schema.org/billingAddress
+        paymentMethod:
+          type: string
+          x-rdf-type: http://schema.org/paymentMethod
+          example: cash/card
+    Car:
+      type: object
+      x-rdf-type: 'http://schema.org/Car'
+      properties:
+        id:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        bodyType:
+          type: string
+          x-rdf-type: http://schema.org/bodyType
+          example: SUV
+        accelerationTime:
+          type: number
+          x-rdf-type: http://schema.org/accelerationTime
+        emissionsCO2:
+          type: number
+          x-rdf-type: http://schema.org/emissionsCO2
+        speed:
+          type: number
+          x-rdf-type: http://schema.org/speed
+        model:
+          type: string
+          x-rdf-type: http://schema.org/model
+          example: Volkswagen Jetta
+        productionDate:
+          type: string
+          x-rdf-type: http://schema.org/productionDate
+        fuelCapacity:
+          type: number
+          x-rdf-type: http://schema.org/fuelCapacity
+        engine:
+          type: string
+          x-rdf-type: http://schema.org/vehicleEngine
+        price:
+          type: number
+          x-rdf-type: http://schema.org/price
+        weight:
+          type: number
+          x-rdf-type: http://schema.org/weightTotal
+        identificationNumber:
+          type: string
+          x-rdf-type: http://schema.org/vehicleIdentificationNumber
+          example: 1HGBH41JXMN109186
+        seatingCapacity:
+          type: number
+          x-rdf-type: http://schema.org/seatingCapacity
+        airbags:
+          type: number
+          x-rdf-type: http://schema.org/numberOfAirbags
+        meetsEmissionStandards:
+          type: boolean
+          x-rdf-type: http://schema.org/meetsEmissionStandards
+        fuelType:
+          type: string
+          x-rdf-type: http://schema.org/fuelType
+        fuelConsumption:
+          type: number
+          x-rdf-type: http://schema.org/fuelConsumption
+    Dealer:
+      type: object
+      x-rdf-type: 'http://schema.org/AutoDealer'
+      properties:
+        id:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        name:
+          type: string
+          x-rdf-type: http://schema.org/name
+        code:
+          type: string
+          x-rdf-type: http://schema.org/leiCode
+        address:
+          type: string
+          x-rdf-type: http://schema.org/address
+        email:
+          type: string
+          x-rdf-type: http://schema.org/email
+        phoneNumber:
+          type: string
+          x-rdf-type: http://schema.org/telephone
+    Customer:
+      type: object
+      x-rdf-type: 'http://schema.org/Person'
+      properties:
+        id:
+          type: integer
+          x-rdf-type: http://schema.org/identifier
+          format: int64
+        firstName:
+          type: string
+          x-rdf-type: http://schema.org/name
+        lastName:
+          type: string
+          x-rdf-type: http://schema.org/name
+        address:
+          type: string
+          x-rdf-type: http://schema.org/address
+        email:
+          type: string
+          x-rdf-type: http://schema.org/email
+        phoneNumber:
+          type: string
+          x-rdf-type: http://schema.org/telephone
+externalDocs:
+  description: Find out more about Swagger
+  url: 'http://swagger.io'

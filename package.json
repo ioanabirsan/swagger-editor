@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@kyleshockey/js-yaml": "^1.0.1",
-    "ajv": "^5.2.2",
+    "ajv": "^6.10.0",
     "ajv-errors": "^1.0.1",
     "ajv-keywords": "^3.4.0",
     "boron": "^0.2.3",

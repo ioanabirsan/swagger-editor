@@ -3,12 +3,28 @@
 // comma dangles in this file = cleaner diffs
 /*eslint comma-dangle: ["error", "always-multiline"]*/
 
+import schemaOrg from "./schema-org"
+
 // anyOf and combine are the same for now.
 // they are seperated for semantics, and for possible future improvement
 const anyOf = (...objs) => objs ? Object.assign({}, ...objs) : {}
 const stringEnum = (arr) => arr
 
 const Any = null
+
+function getSchemaOrgClasses () {
+  let concepts = schemaOrg["@graph"]
+  return concepts.filter(concept => concept["@type"] === "rdfs:Class").map(concept => concept["@id"])
+}
+
+function getSchemaOrgProperties () {
+  let concepts = schemaOrg["@graph"]
+  return concepts.filter(concept => concept["@type"] === "rdf:Property").map(concept => concept["@id"])
+  // return ["http://schema.org/Property"]
+}
+
+var schemaOrgClasses = getSchemaOrgClasses()
+var schemaOrgProperties = getSchemaOrgProperties()
 
 export const ExternalDocumentation = {
   description: String,
@@ -92,6 +108,50 @@ export const Link = {
   server: Server,
 }
 
+export const Properties = {
+  // Lifted from JSONSchema
+  title: String,
+  multipleOf: String,
+  maximum: String,
+  exclusiveMaximum: String,
+  minimum: String,
+  exclusiveMinimum: String,
+  maxLength: String,
+  minLength: String,
+  pattern: RegExp,
+  maxItems: String,
+  minItems: String,
+  uniqueItems: Boolean,
+  maxProperties: String,
+  minProperties: String,
+  required: Boolean,
+  enum: String,
+  "x-rdf-type": schemaOrgProperties,
+  // Adapted from JSONSchema
+  type: String,
+  get allOf () { return this },
+  get oneOf () { return this },
+  get anyOf () { return this },
+  get not () { return this },
+  get items () { return this },
+  get properties () {
+    return {
+      ".": this,
+    }
+  },
+  get additionalProperties () { return this },
+  description: String,
+  format: String,
+  default: Any,
+  nullable: Boolean,
+  readOnly: Boolean,
+  writeOnly: Boolean,
+  xml: XML,
+  externalDocs: ExternalDocumentation,
+  example: Any,
+  deprecated: Boolean,
+}
+
 export const Schema = {
   // Lifted from JSONSchema
   title: String,
@@ -110,6 +170,8 @@ export const Schema = {
   minProperties: String,
   required: Boolean,
   enum: String,
+  "x-rdf-type": schemaOrgClasses,
+  "x-same-as": schemaOrgClasses,
   // Adapted from JSONSchema
   type: String,
   get allOf () { return this },
@@ -119,7 +181,7 @@ export const Schema = {
   get items () { return this },
   get properties () {
     return {
-      ".": this,
+      ".": Properties,
     }
   },
   get additionalProperties () { return this },
