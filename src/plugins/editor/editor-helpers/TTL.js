@@ -67,6 +67,8 @@ export default class TTL {
           }
         }
       }
+
+      rdfTriplesInTurtleSyntax += `\n`
     }
 
     return rdfTriplesInTurtleSyntax

@@ -2,8 +2,8 @@
   "openapi": "3.0.0",
   "info": {
     "version": "0.0.0",
-    "title": "Car Dealership",
-    "description": "This is a sample server for a car dealership.",
+    "title": "Taxi Service",
+    "description": "This is a sample server for a taxi service.",
     "termsOfService": "http://example.com/terms/"
   },
   "tags": [
@@ -16,8 +16,8 @@
       "description": "Operations about cars"
     },
     {
-      "name": "dealer",
-      "description": "Operations about dealers"
+      "name": "taxi service",
+      "description": "Operations about taxi services"
     },
     {
       "name": "customer",
@@ -102,7 +102,7 @@
         },
         "security": [
           {
-            "dealership_auth": [
+            "taxiservice_auth": [
               "write:orders",
               "read:orders"
             ]
@@ -137,7 +137,7 @@
         },
         "security": [
           {
-            "dealership_auth": [
+            "taxiservice_auth": [
               "write:orders",
               "read:orders"
             ]
@@ -254,7 +254,7 @@
         },
         "security": [
           {
-            "dealership_auth": [
+            "taxiservice_auth": [
               "write:cars",
               "read:cars"
             ]
@@ -289,7 +289,7 @@
         },
         "security": [
           {
-            "dealership_auth": [
+            "taxiservice_auth": [
               "write:cars",
               "read:cars"
             ]
@@ -329,20 +329,20 @@
         }
       }
     },
-    "/dealers": {
+    "/taxiServices": {
       "post": {
         "tags": [
-          "dealer"
+          "taxi service"
         ],
-        "summary": "Creates a dealer and returns the dealer ID",
-        "operationId": "createDealer",
+        "summary": "Creates a taxi service and returns the taxi service ID",
+        "operationId": "createTaxiService",
         "requestBody": {
           "required": true,
-          "description": "A JSON object that contains the dealer.",
+          "description": "A JSON object that contains the taxi service.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Dealer"
+                "$ref": "#/components/schemas/TaxiService"
               }
             }
           }
@@ -358,19 +358,19 @@
                     "id": {
                       "type": "integer",
                       "format": "int64",
-                      "description": "ID of the created dealer."
+                      "description": "ID of the created taxi service."
                     }
                   }
                 }
               }
             },
             "links": {
-              "GetDealerById": {
-                "operationId": "getDealer",
+              "GetTaxiServiceById": {
+                "operationId": "getTaxiService",
                 "parameters": {
                   "carId": "$response.body#/id"
                 },
-                "description": "The `id` value returned in the response can be used as the `dealerId` parameter in `GET /dealers/{dealerId}`.\n"
+                "description": "The `id` value returned in the response can be used as the `taxiServiceId` parameter in `GET /taxis/{taxiServiceId}`.\n"
               }
             }
           }
@@ -378,17 +378,17 @@
       },
       "put": {
         "tags": [
-          "dealer"
+          "taxi service"
         ],
-        "summary": "Update an existing dealer",
-        "operationId": "updateDealer",
+        "summary": "Update an existing taxi service",
+        "operationId": "updateTaxiService",
         "requestBody": {
           "required": true,
-          "description": "A JSON object that contains the dealer.",
+          "description": "A JSON object that contains the taxi service.",
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/Dealer"
+                "$ref": "#/components/schemas/TaxiService"
               }
             }
           }
@@ -398,7 +398,7 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Dealer not found"
+            "description": "TaxiService not found"
           },
           "405": {
             "description": "Validation exception"
@@ -406,25 +406,25 @@
         },
         "security": [
           {
-            "dealership_auth": [
-              "write:dealers",
-              "read:dealers"
+            "taxiservice_auth": [
+              "write:taxiServices",
+              "read:taxiServices"
             ]
           }
         ]
       },
       "delete": {
         "tags": [
-          "dealer"
+          "taxi service"
         ],
-        "summary": "Deletes a dealer",
-        "operationId": "deleteDealer",
+        "summary": "Deletes a taxi service",
+        "operationId": "deleteTaxiService",
         "parameters": [
           {
-            "name": "dealerId",
+            "name": "taxiServiceId",
             "in": "path",
             "required": true,
-            "description": "Dealer id to delete",
+            "description": "TaxiService id to delete",
             "schema": {
               "type": "integer",
               "format": "int64"
@@ -436,30 +436,30 @@
             "description": "Invalid ID supplied"
           },
           "404": {
-            "description": "Dealer not found"
+            "description": "TaxiService not found"
           }
         },
         "security": [
           {
-            "dealership_auth": [
-              "write:dealers",
-              "read:dealers"
+            "taxiservice_auth": [
+              "write:taxiServices",
+              "read:taxiServices"
             ]
           }
         ]
       }
     },
-    "/dealers/{dealerId}": {
+    "/taxiServices/{taxiServiceId}": {
       "get": {
         "tags": [
-          "dealer"
+          "taxi service"
         ],
-        "summary": "Gets a dealer by ID",
-        "operationId": "getDealer",
+        "summary": "Gets a taxi service by ID",
+        "operationId": "getTaxiService",
         "parameters": [
           {
             "in": "path",
-            "name": "dealerId",
+            "name": "taxiServiceId",
             "required": true,
             "schema": {
               "type": "integer",
@@ -469,11 +469,11 @@
         ],
         "responses": {
           "200": {
-            "description": "A Dealer object",
+            "description": "A TaxiService object",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Dealer"
+                  "$ref": "#/components/schemas/TaxiService"
                 }
               }
             }
@@ -558,7 +558,7 @@
         },
         "security": [
           {
-            "dealership_auth": [
+            "taxiservice_auth": [
               "write:customers",
               "read:customers"
             ]
@@ -593,7 +593,7 @@
         },
         "security": [
           {
-            "dealership_auth": [
+            "taxiservice_auth": [
               "write:customers",
               "read:customers"
             ]
@@ -655,11 +655,6 @@
             "x-rdf-type": "http://schema.org/identifier",
             "format": "int64"
           },
-          "dealerId": {
-            "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
-            "format": "int64"
-          },
           "number": {
             "type": "string",
             "x-rdf-type": "http://schema.org/orderNumber",
@@ -677,10 +672,6 @@
           "confirmationNumber": {
             "type": "string",
             "x-rdf-type": "http://schema.org/confirmationNumber"
-          },
-          "billingAddress": {
-            "type": "string",
-            "x-rdf-type": "http://schema.org/billingAddress"
           },
           "paymentMethod": {
             "type": "string",
@@ -767,30 +758,54 @@
           }
         }
       },
-      "Dealer": {
+      "TaxiService": {
         "type": "object",
-        "x-rdf-type": "http://schema.org/AutoDealer",
+        "x-rdf-type": "http://schema.org/TaxiService",
         "properties": {
           "id": {
             "type": "integer",
             "x-rdf-type": "http://schema.org/identifier",
             "format": "int64"
           },
-          "name": {
+          "provider": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/name"
+            "x-rdf-type": "http://schema.org/provider"
           },
-          "code": {
-            "type": "string",
-            "x-rdf-type": "http://schema.org/leiCode"
+          "rating": {
+            "type": "number",
+            "x-rdf-type": "http://schema.org/aggregateRating"
           },
-          "address": {
-            "type": "string",
-            "x-rdf-type": "http://schema.org/address"
+          "reviews": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "x-rdf-type": "http://schema.org/review"
           },
-          "email": {
+          "cars": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/components/schemas/Car"
+            }
+          },
+          "orders": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "$ref": "#/components/schemas/Order"
+            }
+          },
+          "termsOfService": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/email"
+            "x-rdf-type": "http://schema.org/termsOfService"
+          },
+          "costPerKm": {
+            "type": "number"
+          },
+          "hoursAvailable": {
+            "type": "string",
+            "x-rdf-type": "http://schema.org/hoursAvailable"
           },
           "phoneNumber": {
             "type": "string",
@@ -818,14 +833,6 @@
           "address": {
             "type": "string",
             "x-rdf-type": "http://schema.org/address"
-          },
-          "email": {
-            "type": "string",
-            "x-rdf-type": "http://schema.org/email"
-          },
-          "phoneNumber": {
-            "type": "string",
-            "x-rdf-type": "http://schema.org/telephone"
           }
         }
       }
