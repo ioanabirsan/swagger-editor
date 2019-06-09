@@ -744,9 +744,9 @@
             "type": "number",
             "x-rdf-type": "http://schema.org/numberOfAirbags"
           },
-          "meetsEmissionStandards": {
+          "meetsEmissionStandard": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/meetsEmissionStandards"
+            "x-rdf-type": "http://schema.org/meetsEmissionStandard"
           },
           "fuelType": {
             "type": "string",
