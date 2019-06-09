@@ -515,7 +515,7 @@ components:
           type: array
           items:
             type: string
-          x-rdf-type: http://schema.org/review
+          x-rdf-type: http://schema.org/reviews
         cars:
           type: array
           items:
