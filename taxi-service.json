@@ -779,20 +779,17 @@
             "type": "array",
             "items": {
               "type": "string"
-            },
-            "x-rdf-type": "http://schema.org/reviews"
+            }
           },
           "cars": {
             "type": "array",
             "items": {
-              "type": "object",
               "$ref": "#/components/schemas/Car"
             }
           },
           "orders": {
             "type": "array",
             "items": {
-              "type": "object",
               "$ref": "#/components/schemas/Order"
             }
           },
