@@ -861,16 +861,16 @@
   "definitions": {
     "Order": {
       "type": "object",
-      "x-rdf-type": "http://schema.org/Order",
+      "x-same-as": "http://schema.org/Order",
       "properties": {
         "id": {
           "type": "integer",
-          "x-rdf-type": "http://schema.org/identifier",
+          "x-same-as": "http://schema.org/identifier",
           "format": "int64"
         },
         "petId": {
           "type": "integer",
-          "x-rdf-type": "http://schema.org/identifier",
+          "x-same-as": "http://schema.org/identifier",
           "format": "int64"
         },
         "quantity": {
@@ -883,7 +883,7 @@
         },
         "status": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/orderStatus",
+          "x-same-as": "http://schema.org/orderStatus",
           "description": "Order Status",
           "enum": [
             "placed",
@@ -905,7 +905,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "x-rdf-type": "http://schema.org/identifier",
+          "x-same-as": "http://schema.org/identifier",
           "format": "int64"
         },
         "name": {
@@ -918,11 +918,11 @@
     },
     "User": {
       "type": "object",
-      "x-rdf-type": "http://schema.org/Person",
+      "x-same-as": "http://schema.org/Person",
       "properties": {
         "id": {
           "type": "integer",
-          "x-rdf-type": "http://schema.org/identifier",
+          "x-same-as": "http://schema.org/identifier",
           "format": "int64"
         },
         "username": {
@@ -930,23 +930,23 @@
         },
         "firstName": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/name"
+          "x-same-as": "http://schema.org/name"
         },
         "lastName": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/name"
+          "x-same-as": "http://schema.org/name"
         },
         "email": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/email"
+          "x-same-as": "http://schema.org/email"
         },
         "password": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/accessCode"
+          "x-same-as": "http://schema.org/accessCode"
         },
         "phone": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/telephone"
+          "x-same-as": "http://schema.org/telephone"
         },
         "userStatus": {
           "type": "integer",
@@ -963,7 +963,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "x-rdf-type": "http://schema.org/identifier",
+          "x-same-as": "http://schema.org/identifier",
           "format": "int64"
         },
         "name": {
@@ -983,7 +983,7 @@
       "properties": {
         "id": {
           "type": "integer",
-          "x-rdf-type": "http://schema.org/identifier",
+          "x-same-as": "http://schema.org/identifier",
           "format": "int64"
         },
         "category": {
@@ -991,7 +991,7 @@
         },
         "name": {
           "type": "string",
-          "x-rdf-type": "http://schema.org/name",
+          "x-same-as": "http://schema.org/name",
           "example": "doggie"
         },
         "photoUrls": {

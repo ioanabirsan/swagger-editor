@@ -638,137 +638,137 @@
     "schemas": {
       "Order": {
         "type": "object",
-        "x-rdf-type": "http://schema.org/Order",
+        "x-same-as": "http://schema.org/Order",
         "properties": {
           "id": {
             "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
+            "x-same-as": "http://schema.org/identifier",
             "format": "int64"
           },
           "carId": {
             "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
+            "x-same-as": "http://schema.org/identifier",
             "format": "int64"
           },
           "customerId": {
             "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
+            "x-same-as": "http://schema.org/identifier",
             "format": "int64"
           },
           "number": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/orderNumber",
+            "x-same-as": "http://schema.org/orderNumber",
             "format": "int64"
           },
           "date": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/orderDate"
+            "x-same-as": "http://schema.org/orderDate"
           },
           "status": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/orderStatus",
+            "x-same-as": "http://schema.org/orderStatus",
             "example": "waiting/processed"
           },
           "confirmationNumber": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/confirmationNumber"
+            "x-same-as": "http://schema.org/confirmationNumber"
           },
           "paymentMethod": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/paymentMethod",
+            "x-same-as": "http://schema.org/paymentMethod",
             "example": "cash/card"
           }
         }
       },
       "Car": {
         "type": "object",
-        "x-rdf-type": "http://schema.org/Car",
+        "x-same-as": "http://schema.org/Car",
         "properties": {
           "id": {
             "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
+            "x-same-as": "http://schema.org/identifier",
             "format": "int64"
           },
           "bodyType": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/bodyType",
+            "x-same-as": "http://schema.org/bodyType",
             "example": "SUV"
           },
           "accelerationTime": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/accelerationTime"
+            "x-same-as": "http://schema.org/accelerationTime"
           },
           "emissionsCO2": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/emissionsCO2"
+            "x-same-as": "http://schema.org/emissionsCO2"
           },
           "speed": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/speed"
+            "x-same-as": "http://schema.org/speed"
           },
           "model": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/model",
+            "x-same-as": "http://schema.org/model",
             "example": "Volkswagen Jetta"
           },
           "productionDate": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/productionDate"
+            "x-same-as": "http://schema.org/productionDate"
           },
           "fuelCapacity": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/fuelCapacity"
+            "x-same-as": "http://schema.org/fuelCapacity"
           },
           "engine": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/vehicleEngine"
+            "x-same-as": "http://schema.org/vehicleEngine"
           },
           "price": {
             "type": "number"
           },
           "weight": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/weightTotal"
+            "x-same-as": "http://schema.org/weightTotal"
           },
           "identificationNumber": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/vehicleIdentificationNumber",
+            "x-same-as": "http://schema.org/vehicleIdentificationNumber",
             "example": "1HGBH41JXMN109186"
           },
           "seatingCapacity": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/seatingCapacity"
+            "x-same-as": "http://schema.org/seatingCapacity"
           },
           "airbags": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/numberOfAirbags"
+            "x-same-as": "http://schema.org/numberOfAirbags"
           },
           "meetsEmissionStandard": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/meetsEmissionStandard"
+            "x-same-as": "http://schema.org/meetsEmissionStandard"
           },
           "fuelType": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/fuelType"
+            "x-same-as": "http://schema.org/fuelType"
           },
           "fuelConsumption": {
             "type": "number",
-            "x-rdf-type": "http://schema.org/fuelConsumption"
+            "x-same-as": "http://schema.org/fuelConsumption"
           }
         }
       },
       "TaxiService": {
         "type": "object",
-        "x-rdf-type": "http://schema.org/TaxiService",
+        "x-same-as": "http://schema.org/TaxiService",
         "properties": {
           "id": {
             "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
+            "x-same-as": "http://schema.org/identifier",
             "format": "int64"
           },
           "provider": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/provider"
+            "x-same-as": "http://schema.org/provider"
           },
           "rating": {
             "type": "number"
@@ -793,14 +793,14 @@
           },
           "termsOfService": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/termsOfService"
+            "x-same-as": "http://schema.org/termsOfService"
           },
           "costPerKm": {
             "type": "number"
           },
           "hoursAvailable": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/hoursAvailable"
+            "x-same-as": "http://schema.org/hoursAvailable"
           },
           "phoneNumber": {
             "type": "string"
@@ -809,24 +809,24 @@
       },
       "Customer": {
         "type": "object",
-        "x-rdf-type": "http://schema.org/Person",
+        "x-same-as": "http://schema.org/Person",
         "properties": {
           "id": {
             "type": "integer",
-            "x-rdf-type": "http://schema.org/identifier",
+            "x-same-as": "http://schema.org/identifier",
             "format": "int64"
           },
           "firstName": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/name"
+            "x-same-as": "http://schema.org/name"
           },
           "lastName": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/name"
+            "x-same-as": "http://schema.org/name"
           },
           "address": {
             "type": "string",
-            "x-rdf-type": "http://schema.org/address"
+            "x-same-as": "http://schema.org/address"
           }
         }
       }
