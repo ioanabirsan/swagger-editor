@@ -61,7 +61,7 @@ var properties = {
   maxProperties: Number,
   minProperties: Number,
   required: [String],
-  "x-rdf-type": schemaOrgProperties,
+  "x-same-as": schemaOrgProperties,
   type: ["string", "number", "integer", "boolean", "array", "object"],
   get items () { return this },
   get allOf () { return [this] },

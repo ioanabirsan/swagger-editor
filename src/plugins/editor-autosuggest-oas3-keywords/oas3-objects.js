@@ -126,7 +126,7 @@ export const Properties = {
   minProperties: String,
   required: Boolean,
   enum: String,
-  "x-rdf-type": schemaOrgProperties,
+  "x-same-as": schemaOrgProperties,
   // Adapted from JSONSchema
   type: String,
   get allOf () { return this },
