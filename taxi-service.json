@@ -724,8 +724,7 @@
             "x-rdf-type": "http://schema.org/vehicleEngine"
           },
           "price": {
-            "type": "number",
-            "x-rdf-type": "http://schema.org/price"
+            "type": "number"
           },
           "weight": {
             "type": "number",
@@ -772,8 +771,7 @@
             "x-rdf-type": "http://schema.org/provider"
           },
           "rating": {
-            "type": "number",
-            "x-rdf-type": "http://schema.org/aggregateRating"
+            "type": "number"
           },
           "reviews": {
             "type": "array",
@@ -805,8 +803,7 @@
             "x-rdf-type": "http://schema.org/hoursAvailable"
           },
           "phoneNumber": {
-            "type": "string",
-            "x-rdf-type": "http://schema.org/telephone"
+            "type": "string"
           }
         }
       },
