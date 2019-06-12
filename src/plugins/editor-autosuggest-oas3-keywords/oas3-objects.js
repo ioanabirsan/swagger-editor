@@ -1,9 +1,6 @@
 // Adapted from OAS 3.0.0-rc2
 
-// comma dangles in this file = cleaner diffs
-/*eslint comma-dangle: ["error", "always-multiline"]*/
-
-import schemaOrg from "./schema-org"
+import SchemaOrgExtractor from "src/plugins/editor/editor-helpers/schema-org-concepts.js"
 
 // anyOf and combine are the same for now.
 // they are seperated for semantics, and for possible future improvement
@@ -12,19 +9,8 @@ const stringEnum = (arr) => arr
 
 const Any = null
 
-function getSchemaOrgClasses () {
-  let concepts = schemaOrg["@graph"]
-  return concepts.filter(concept => concept["@type"] === "rdfs:Class").map(concept => concept["@id"])
-}
-
-function getSchemaOrgProperties () {
-  let concepts = schemaOrg["@graph"]
-  return concepts.filter(concept => concept["@type"] === "rdf:Property").map(concept => concept["@id"])
-  // return ["http://schema.org/Property"]
-}
-
-var schemaOrgClasses = getSchemaOrgClasses()
-var schemaOrgProperties = getSchemaOrgProperties()
+var schemaOrgClasses = SchemaOrgExtractor.getClasses()
+var schemaOrgProperties = SchemaOrgExtractor.getProperties()
 
 export const ExternalDocumentation = {
   description: String,

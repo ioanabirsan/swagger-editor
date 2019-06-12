@@ -1,4 +1,4 @@
-import schemaOrg from "./schema-org"
+import SchemaOrgExtractor from "src/plugins/editor/editor-helpers/schema-org-concepts.js"
 
 var Bool = ["true", "false"]
 var Anything = String
@@ -26,19 +26,8 @@ var xml = {
   wrapped: Bool
 }
 
-function getSchemaOrgClasses () {
-  let concepts = schemaOrg["@graph"]
-  return concepts.filter(concept => concept["@type"] === "rdfs:Class").map(concept => concept["@id"])
-}
-
-function getSchemaOrgProperties () {
-  let concepts = schemaOrg["@graph"]
-  return concepts.filter(concept => concept["@type"] === "rdf:Property").map(concept => concept["@id"])
-  // return ["http://schema.org/Property"]
-}
-
-var schemaOrgClasses = getSchemaOrgClasses()
-var schemaOrgProperties = getSchemaOrgProperties()
+var schemaOrgClasses = SchemaOrgExtractor.getClasses()
+var schemaOrgProperties = SchemaOrgExtractor.getProperties()
 
 var properties = {
   $ref: String,
@@ -99,7 +88,6 @@ var schema = {
   maxProperties: Number,
   minProperties: Number,
   required: [String],
-  "x-rdf-type": schemaOrgClasses,
   "x-same-as": schemaOrgClasses,
   type: ["string", "number", "integer", "boolean", "array", "object"],
   get items () { return this },
